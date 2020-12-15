@@ -19,6 +19,7 @@ struct DailyWeatherData: Codable {
     let windSpeed: Double?
     let temperatureMin : Double?
     let temperatureMax : Double?
+    let sunriseTime: Int?
     
     enum CodingKeys: CodingKey {
         case time
@@ -32,5 +33,6 @@ struct DailyWeatherData: Codable {
         case windSpeed
         case temperatureMin
         case temperatureMax
+        case sunriseTime
     }
 }
