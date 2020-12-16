@@ -15,12 +15,18 @@ class CurrentWeatherViewModel {
     let dailyWeatherData: DailyWeatherData
     let dayFormats = DateFormats()
     let configureIcon = ConfigureIcons()
+    var city: City?
     
-    init(currentWeatherData: Currently, dailyWeatherData: DailyWeatherData) {
+    init(currentWeatherData: Currently, dailyWeatherData: DailyWeatherData, city: City?) {
         self.currentWeatherData = currentWeatherData
         self.dailyWeatherData = dailyWeatherData
+        self.city = city
     }
     
+    var currentLocatinText: String {
+        //Beşiktaş is the default coordinate city defined in MainVC/getWheatherData()
+        return city?.name ?? "Beşiktaş"
+    }
     
     var currentTempText: String {
         guard let temp = currentWeatherData.temperature else { return "_"}
@@ -71,6 +77,7 @@ class CurrentWeatherViewModel {
    
     
     func configureUIElements(mainVC: MainViewController){
+        mainVC.locationLabel.text = currentLocatinText
         mainVC.maxMinTempLabel.text = maxMinTempText
         mainVC.currentWeatherImageview.image = UIImage(systemName: iconImageText)
         mainVC.currentWeatherImageview.tintColor = iconImageTintColor

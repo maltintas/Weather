@@ -78,7 +78,7 @@ class MainViewController: UIViewController {
             guard let firstDailyWeatherData = data?.daily?.dailyData?.first else { return }
             guard let hourlyData = data?.hourly?.hourlyData else {return }
             
-            let currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherData: currentWeather, dailyWeatherData: firstDailyWeatherData)
+            let currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherData: currentWeather, dailyWeatherData: firstDailyWeatherData, city: self?.contentVC.city)
             currentWeatherViewModel.configureUIElements(mainVC: self!)
             
             DispatchQueue.main.async {
