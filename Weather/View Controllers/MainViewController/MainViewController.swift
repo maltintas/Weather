@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import FloatingPanel
 
 class MainViewController: UIViewController {
     
@@ -30,6 +31,9 @@ class MainViewController: UIViewController {
     var hourlyWeatherData: [HourlyWeatherData] = []
     let locationManager = CLLocationManager()
     let locationService = LocationServices()
+    let fpc = FloatingPanelController()
+    lazy var contentVC = ContentViewController(nibName: "ContentViewController", bundle: nil)
+    let setFloatingPanel = SetFloatingPanel()
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -40,6 +44,10 @@ class MainViewController: UIViewController {
         
         locationService.checkLocationServices(locationManager: locationManager, viewController: self)
         locationManager.delegate = self
+        
+        setFloatingPanel.onfigureContentViewController(fpc: fpc, parentVC: self, contentViewController: contentVC)
+        fpc.track(scrollView: contentVC.tableView)
+        fpc.delegate = self
     }
 
     //MARK: - Network
@@ -106,4 +114,10 @@ extension MainViewController: CLLocationManagerDelegate {
         guard let location = locations.first else { return }
         getWeatherData(currentLocation: location)
     }
+}
+
+//MARK: - FloatingPanelControllerDelegate
+
+extension MainViewController: FloatingPanelControllerDelegate {
+    
 }

@@ -22,7 +22,7 @@ public class MyFloatingPanelLayout: FloatingPanelLayout {
         return [
             .full: FloatingPanelLayoutAnchor(absoluteInset: 128.0, edge: .top, referenceGuide: .safeArea),
             .half: FloatingPanelLayoutAnchor(fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea),
-            .tip: FloatingPanelLayoutAnchor(absoluteInset: 57, edge: .bottom, referenceGuide: .safeArea)
+            .tip: FloatingPanelLayoutAnchor(absoluteInset: 50, edge: .bottom, referenceGuide: .safeArea)
             ]
     }
     public func backdropAlpha(for state: FloatingPanelState) -> CGFloat {

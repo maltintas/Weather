@@ -58,7 +58,7 @@
                     <color key="tintColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </imageView>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="TbL-wy-0lx">
-                    <rect key="frame" x="0.0" y="704" width="414" height="100"/>
+                    <rect key="frame" x="0.0" y="677" width="414" height="100"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="10Z-SX-VCS"/>
@@ -210,7 +210,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="38y-i5-fya" secondAttribute="trailing" constant="20" id="3Vu-48-zsY"/>
                 <constraint firstItem="sic-TZ-2z3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Bgt-df-O89"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sic-TZ-2z3" secondAttribute="trailing" constant="20" id="DOE-M7-1xn"/>
-                <constraint firstItem="TbL-wy-0lx" firstAttribute="top" secondItem="38y-i5-fya" secondAttribute="bottom" constant="47" id="TKe-Jh-Qgl"/>
+                <constraint firstItem="TbL-wy-0lx" firstAttribute="top" secondItem="38y-i5-fya" secondAttribute="bottom" constant="20" id="TKe-Jh-Qgl"/>
                 <constraint firstItem="38y-i5-fya" firstAttribute="top" secondItem="sic-TZ-2z3" secondAttribute="bottom" constant="17" id="jg1-t4-5o9"/>
                 <constraint firstItem="TbL-wy-0lx" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="tHp-y1-ye9"/>
                 <constraint firstItem="sic-TZ-2z3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ugE-RC-FkP"/>
