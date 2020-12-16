@@ -162,7 +162,8 @@ extension MainViewController: UISearchBarDelegate {
         }
         searchBar.text = ""
         DispatchQueue.main.async {
-            //TODO:
+            self.contentVC.matchedItems.removeAll()
+            self.contentVC.tableView.reloadData()
         }
     }
     
@@ -174,6 +175,16 @@ extension MainViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //TODO: MKLocalSearch
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = searchText
+        
+        let search = MKLocalSearch(request: request)
+        search.start { (response, _) in
+            guard let response = response else {return }
+            self.contentVC.matchedItems = response.mapItems
+            DispatchQueue.main.async {
+                self.contentVC.tableView.reloadData()
+            }
+        }
     }
 }

@@ -33,6 +33,8 @@
 		F06D714D258A241B001CC2B5 /* HourlyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06D714B258A241B001CC2B5 /* HourlyCollectionViewCell.swift */; };
 		F06D714E258A241B001CC2B5 /* HourlyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F06D714C258A241B001CC2B5 /* HourlyCollectionViewCell.xib */; };
 		F06D7151258A257D001CC2B5 /* HourlyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06D7150258A257D001CC2B5 /* HourlyViewModel.swift */; };
+		F097B86A258AB798004C1A16 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F097B868258AB798004C1A16 /* SearchResultTableViewCell.swift */; };
+		F097B86B258AB798004C1A16 /* SearchResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F097B869258AB798004C1A16 /* SearchResultTableViewCell.xib */; };
 		F0FA4BAF258AA582002CA8D2 /* MyFloatingPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */; };
 		F0FA4BB1258AA656002CA8D2 /* FloatingPanel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */; };
 		F0FA4BB3258AA7B9002CA8D2 /* SetFloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */; };
@@ -73,6 +75,8 @@
 		F06D714B258A241B001CC2B5 /* HourlyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyCollectionViewCell.swift; sourceTree = "<group>"; };
 		F06D714C258A241B001CC2B5 /* HourlyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HourlyCollectionViewCell.xib; sourceTree = "<group>"; };
 		F06D7150258A257D001CC2B5 /* HourlyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyViewModel.swift; sourceTree = "<group>"; };
+		F097B868258AB798004C1A16 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		F097B869258AB798004C1A16 /* SearchResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultTableViewCell.xib; sourceTree = "<group>"; };
 		F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFloatingPanelLayout.swift; sourceTree = "<group>"; };
 		F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPanel+Extension.swift"; sourceTree = "<group>"; };
 		F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFloatingPanel.swift; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 		F06D71022588B5BE001CC2B5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F097B867258AB771004C1A16 /* SearchResultTableViewCell */,
 				F06D714F258A241F001CC2B5 /* HourlyCollectionViewCell */,
 			);
 			path = Views;
@@ -251,6 +256,15 @@
 				F06D714C258A241B001CC2B5 /* HourlyCollectionViewCell.xib */,
 			);
 			path = HourlyCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		F097B867258AB771004C1A16 /* SearchResultTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F097B868258AB798004C1A16 /* SearchResultTableViewCell.swift */,
+				F097B869258AB798004C1A16 /* SearchResultTableViewCell.xib */,
+			);
+			path = SearchResultTableViewCell;
 			sourceTree = "<group>";
 		};
 		F0FA4BB4258AA8AC002CA8D2 /* ContentViewController */ = {
@@ -326,6 +340,7 @@
 				F06D70F02588B183001CC2B5 /* Assets.xcassets in Resources */,
 				F0FA4BB8258AA8C7002CA8D2 /* ContentViewController.xib in Resources */,
 				F06D70EE2588B181001CC2B5 /* Main.storyboard in Resources */,
+				F097B86B258AB798004C1A16 /* SearchResultTableViewCell.xib in Resources */,
 				F06D711D2588C50B001CC2B5 /* MainViewController.xib in Resources */,
 				F06D714E258A241B001CC2B5 /* HourlyCollectionViewCell.xib in Resources */,
 			);
@@ -404,6 +419,7 @@
 				F0FA4BAF258AA582002CA8D2 /* MyFloatingPanelLayout.swift in Sources */,
 				F06D710E2588BD1B001CC2B5 /* Daily.swift in Sources */,
 				F06D7151258A257D001CC2B5 /* HourlyViewModel.swift in Sources */,
+				F097B86A258AB798004C1A16 /* SearchResultTableViewCell.swift in Sources */,
 				F06D714D258A241B001CC2B5 /* HourlyCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
