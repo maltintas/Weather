@@ -13,7 +13,6 @@ struct Currently: Codable {
     let icon: String?
     let precipIntensity: Double?
     let precipProbability: Double?
-    let precipType: String?
     let temperature: Double?
     let apparentTemprature: Double?
     let windSpeed: Double?
@@ -24,7 +23,6 @@ struct Currently: Codable {
         case icon
         case precipIntensity
         case precipProbability
-        case precipType
         case temperature
         case apparentTemprature
         case windSpeed

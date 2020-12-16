@@ -49,7 +49,7 @@ class CurrentWeatherViewModel {
     }
     
     var precipProbilityICon: String {
-        guard let precipType = currentWeatherData.precipType else {return "_"}
+        guard let precipType = dailyWeatherData.precipType else {return "_"}
         return configureIcon.setIcons(iconName: precipType)
     }
     
