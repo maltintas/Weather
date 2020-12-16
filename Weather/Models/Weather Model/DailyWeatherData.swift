@@ -15,7 +15,6 @@ struct DailyWeatherData: Codable {
     let precipProbability: Double?
     let precipType: String?
     let temperature: Double?
-    let apparentTemprature: Double?
     let windSpeed: Double?
     let temperatureMin : Double?
     let temperatureMax : Double?
@@ -29,7 +28,6 @@ struct DailyWeatherData: Codable {
         case precipProbability
         case precipType
         case temperature
-        case apparentTemprature
         case windSpeed
         case temperatureMin
         case temperatureMax

@@ -10,32 +10,53 @@ import Foundation
 import UIKit
 
 struct ConfigureIcons {
-    func setIcons(iconName: String) -> UIImage {
+    func setIcons(iconName: String) -> String {
         switch iconName {
         case "clear-day":
-            return UIImage(systemName: "sun.max.fill") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "sun.max.fill"
         case "clear-night":
-            return UIImage(systemName: "sun.max.fill") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "moon.stars"
         case "cloudy":
-            return UIImage(systemName: "cloud.fill") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "cloud.fill"
         case "fog":
-            return UIImage(systemName: "cloud.fill") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "cloud.fog.fill"
         case "partly-cloudy-day":
-            return UIImage(systemName: "cloud.sun.fill") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "cloud.sun.fill"
         case "partly-cloudy-night":
-            return UIImage(systemName: "cloud.moon.fill") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "cloud.moon.fill"
         case "rain":
-            return UIImage(systemName: "cloud.rain.fill") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "cloud.rain.fill"
         case "sleet":
-            return UIImage(systemName: "cloud.sleet.fill") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "cloud.sleet.fill"
         case "snow":
-            return UIImage(systemName: "cloud.snow") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "cloud.snow"
         case "thunderstorm":
-            return UIImage(systemName: "cloud.bolt.rain") ?? UIImage(systemName: "wifi.exclamationmark")!
+            return "cloud.bolt.rain"
         case "wind":
-             return UIImage(systemName: "wind") ?? UIImage(systemName: "wifi.exclamationmark")!
+             return "wind"
+        case "hail":
+            return "cloud.hail.fill"
         default:
-            return UIImage(systemName: "wifi.exclamationmark")!
+            return "wifi.exclamationmark"
         }
     }
+    
+    func configureTintColor(iconName: String) -> UIColor {
+           switch iconName {
+           case "clear-day":
+               return .systemYellow
+           case "clear-night", "partly-cloudy-night":
+               return .parliementBlue()
+           case "cloudy", "rain", "partly-cloudy-day":
+               return .systemBlue
+           case "fog":
+               return .opaqueSeparator
+           case "sleet", "snow", "wind":
+               return .tertiaryLabel
+           case "hail":
+               return .fontColor()
+           default:
+               return .systemYellow
+           }
+       }
 }

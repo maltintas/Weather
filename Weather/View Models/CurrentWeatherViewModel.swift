@@ -14,37 +14,73 @@ class CurrentWeatherViewModel {
     let currentWeatherData: Currently
     let dailyWeatherData: DailyWeatherData
     let dayFormats = DateFormats()
+    let configureIcon = ConfigureIcons()
     
     init(currentWeatherData: Currently, dailyWeatherData: DailyWeatherData) {
         self.currentWeatherData = currentWeatherData
         self.dailyWeatherData = dailyWeatherData
     }
     
+    
     var currentTempText: String {
-        return "\(String(describing: Int(self.currentWeatherData.temperature ?? 0)))"
+        guard let temp = currentWeatherData.temperature else { return "_"}
+        return "\(Int(temp))"
     }
     
     var maxMinTempText: String {
-        return "\(Int(self.dailyWeatherData.temperatureMax ?? 0))℃ | \(Int(self.dailyWeatherData.temperatureMin ?? 0))℃"
+        guard let maxTemp = dailyWeatherData.temperatureMax else { return "_"}
+        guard let minTemp = dailyWeatherData.temperatureMin else { return "_"}
+        return "\(Int(maxTemp))℃ | \(Int(minTemp))℃"
     }
     
     var summaryText: String {
-        return "\(String(describing: self.currentWeatherData.summary))"
+        guard let summary = currentWeatherData.summary else { return "_"}
+        return "\(summary)"
     }
     
     var sunRiseTimeText: String {
-        return dayFormats.getDayFromDate(date: Date(timeIntervalSince1970: Double(dailyWeatherData.sunriseTime ?? 0)), dateFormat: .HourAndMinute)
+        guard let sunRiseTime = dailyWeatherData.sunriseTime else { return "_"}
+        return dayFormats.getDayFromDate(date: Date(timeIntervalSince1970: Double(sunRiseTime)), dateFormat: .HourAndMinute)
     }
     
     var windSpeedText: String {
-        return "\(String(describing: dailyWeatherData.windSpeed))km/s"
+        guard let windSpeed = dailyWeatherData.windSpeed else {return "_"}
+        return "\(Int(windSpeed)) km/s"
     }
     
-    var apparentTempText: String {
-        return "\(Int(dailyWeatherData.apparentTemprature ?? 0))"
+    var precipProbilityICon: String {
+        guard let precipType = currentWeatherData.precipType else {return "_"}
+        return configureIcon.setIcons(iconName: precipType)
+    }
+    
+    var precipProbabilityText: String {
+        guard let precipProbability = dailyWeatherData.precipProbability else { return "_"}
+        return "%\(Int(precipProbability * 100))"
     }
     
     var iconImageText: String {
-        return "\(String(describing: dailyWeatherData.icon))"
+        guard let iconName = currentWeatherData.icon else {return "_"}
+        return configureIcon.setIcons(iconName: iconName)
+    }
+    
+    var iconImageTintColor: UIColor {
+        guard let iconName = currentWeatherData.icon else {return .systemYellow}
+        return configureIcon.configureTintColor(iconName: iconName)
+    }
+    
+   
+    
+    func configureUIElements(mainVC: MainViewController){
+        mainVC.maxMinTempLabel.text = maxMinTempText
+        mainVC.currentWeatherImageview.image = UIImage(systemName: iconImageText)
+        mainVC.currentWeatherImageview.tintColor = iconImageTintColor
+        mainVC.currentTempLabel.text = currentTempText
+        mainVC.summaryLabel.text = summaryText
+        mainVC.sunRiseTimeLabel.text = sunRiseTimeText
+        mainVC.windSpeedLabel.text = windSpeedText
+        mainVC.precipIcon.image = UIImage(systemName: precipProbilityICon)
+        mainVC.precipProbability.text = precipProbabilityText
+        
+        print(iconImageText)
     }
 }

@@ -11,5 +11,8 @@ extension UIColor {
     static func fontColor() -> UIColor {
         return UIColor(red: 70 / 255, green: 70 / 255, blue: 70 / 255, alpha: 1)
     }
+    static func parliementBlue() -> UIColor{
+           return UIColor(red: 36 / 255, green: 46 / 255, blue: 78 / 255, alpha: 1)
+       }
 }
 

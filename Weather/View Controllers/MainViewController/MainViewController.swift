@@ -19,7 +19,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var sunRiseTimeLabel: UILabel!
     @IBOutlet weak var windSpeedLabel: UILabel!
-    @IBOutlet weak var apparentTempLabel: UILabel!
+    @IBOutlet weak var precipIcon: UIImageView!
+    @IBOutlet weak var precipProbability: UILabel!
     
     //MARK: - Properties
     let fireAlertMessage = AlertMessage()
@@ -45,14 +46,7 @@ class MainViewController: UIViewController {
             guard let firstDailyWeatherData = data?.daily?.dailyData?.first else { return }
             
             let currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherData: currentWeather, dailyWeatherData: firstDailyWeatherData)
-            
-            self.maxMinTempLabel.text = currentWeatherViewModel.maxMinTempText
-            self.currentWeatherImageview.image = self.configureIcon.setIcons(iconName: "\(currentWeatherViewModel.iconImageText)")
-            self.currentTempLabel.text = currentWeatherViewModel.currentTempText
-            self.summaryLabel.text = currentWeatherViewModel.summaryText
-            self.sunRiseTimeLabel.text = currentWeatherViewModel.sunRiseTimeText
-            self.windSpeedLabel.text = currentWeatherViewModel.windSpeedText
-            self.apparentTempLabel.text = currentWeatherViewModel.apparentTempText
+            currentWeatherViewModel.configureUIElements(mainVC: self)
         }
     }
 
