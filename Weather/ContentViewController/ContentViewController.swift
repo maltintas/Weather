@@ -17,6 +17,7 @@ class ContentViewController: UIViewController {
     //MARK: - Properties
     var matchedItems: [MKMapItem] = []
     var cities: [City] = []
+    var city: City?
     
     //MARK: - Life Cycle
     override func viewDidLoad() {

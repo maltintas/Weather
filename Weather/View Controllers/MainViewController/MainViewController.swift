@@ -48,11 +48,21 @@ class MainViewController: UIViewController {
         setFloatingPanel.onfigureContentViewController(fpc: fpc, parentVC: self, contentViewController: contentVC)
         fpc.track(scrollView: contentVC.tableView)
         fpc.delegate = self
+        
+        configureContentView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         contentVC.searchBar.delegate = self
+    }
+    
+    //MARK: - Helper Methods
+    func contentGetWeatherHelper(latitude: Double, longitude: Double, fpc: FloatingPanelController){
+        getWeatherData(currentLocation: CLLocation(latitude: latitude, longitude: longitude))
+        UIView.animate(withDuration: 0.40) {
+            fpc.move(to: .tip, animated: false)
+        }
     }
 
     //MARK: - Network
@@ -185,6 +195,45 @@ extension MainViewController: UISearchBarDelegate {
             DispatchQueue.main.async {
                 self.contentVC.tableView.reloadData()
             }
+        }
+    }
+}
+
+//MARK: - ContentViewController - TableView Delegate
+extension MainViewController: UITableViewDelegate {
+    func configureContentView() {
+        contentVC.loadViewIfNeeded()
+        contentVC.tableView.delegate = self
+        contentVC.searchBar.placeholder = "Searh city"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        deactive(searchBar: contentVC.searchBar)
+        
+        if indexPath.section == 0 {
+            let matchedItemLatitude = contentVC.matchedItems[indexPath.row].placemark.coordinate.latitude
+            let matchedItemLongitude = contentVC.matchedItems[indexPath.row].placemark.coordinate.longitude
+            
+            //Prevent to add same city to cities array
+            guard let cityName = contentVC.matchedItems[indexPath.row].name else { return }
+            for city in 0..<contentVC.cities.count {
+                guard cityName != contentVC.cities[city].name else {return }
+            }
+            DispatchQueue.main.async {
+                self.contentVC.cities.insert(City(name: self.contentVC.matchedItems[indexPath.row].name ?? "No City Information", cityLatitude: self.contentVC.matchedItems[indexPath.row].placemark.coordinate.latitude , cityLongitude: self.contentVC.matchedItems[indexPath.row].placemark.coordinate.longitude), at: 0)
+                self.contentGetWeatherHelper(latitude: matchedItemLatitude, longitude: matchedItemLongitude, fpc: self.fpc)
+                self.contentVC.city = self.contentVC.cities[indexPath.row]
+                
+                self.contentVC.matchedItems.removeAll()
+                self.contentVC.searchBar.text = ""
+                self.contentVC.tableView.reloadData()
+            }
+        } else if indexPath.section == 1 {
+            let citiesLatitude = contentVC.cities[indexPath.row].cityLatitude
+            let citiesLongitude = contentVC.cities[indexPath.row].cityLongitude
+            contentGetWeatherHelper(latitude: citiesLatitude, longitude: citiesLongitude, fpc: fpc)
+            self.contentVC.city = self.contentVC.cities[indexPath.row]
         }
     }
 }
