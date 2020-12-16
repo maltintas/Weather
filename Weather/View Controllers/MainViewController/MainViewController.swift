@@ -49,6 +49,11 @@ class MainViewController: UIViewController {
         fpc.track(scrollView: contentVC.tableView)
         fpc.delegate = self
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        contentVC.searchBar.delegate = self
+    }
 
     //MARK: - Network
     
@@ -119,5 +124,56 @@ extension MainViewController: CLLocationManagerDelegate {
 //MARK: - FloatingPanelControllerDelegate
 
 extension MainViewController: FloatingPanelControllerDelegate {
+    func floatingPanelWillBeginDragging(_ fpc: FloatingPanelController) {
+        if fpc.state == .full {
+            contentVC.searchBar.showsCancelButton = false
+            contentVC.searchBar.resignFirstResponder()
+        }
+    }
     
+    func floatingPanelWillEndDragging(_ fpc: FloatingPanelController, withVelocity velocity: CGPoint, targetState: UnsafeMutablePointer<FloatingPanelState>) {
+        if targetState.pointee != .tip {
+            fpc.contentMode = .static
+        }
+    }
+    
+    func floatingPanelDidEndAttracting(_ fpc: FloatingPanelController) {
+        fpc.contentMode = .fitToBounds
+    }
+}
+
+//MARK: - UISearchBarDelegate
+
+extension MainViewController: UISearchBarDelegate {
+    func active(searchBar: UISearchBar) {
+        contentVC.searchBar.showsCancelButton = true
+        contentVC.tableView.alpha = 1.0
+    }
+    
+    func deactive(searchBar: UISearchBar) {
+        contentVC.searchBar.resignFirstResponder()
+        contentVC.searchBar.showsCancelButton = false
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        deactive(searchBar: searchBar)
+        UIView.animate(withDuration: 0.45) {
+            self.fpc.move(to: .tip, animated: false)
+        }
+        searchBar.text = ""
+        DispatchQueue.main.async {
+            //TODO:
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        active(searchBar: searchBar)
+        UIView.animate(withDuration: 0.45) {
+            self.fpc.move(to: .full, animated: false)
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //TODO: MKLocalSearch
+    }
 }
