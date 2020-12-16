@@ -14,12 +14,11 @@ class LocationServices {
     //MARK: - Properties
     let fireAlertMessage = AlertMessage()
     
-    func checkLocationServices(locationManager: CLLocationManager, delegate: CLLocationManagerDelegate, viewController: UIViewController){
+    func checkLocationServices(locationManager: CLLocationManager, viewController: UIViewController){
         guard CLLocationManager.locationServicesEnabled() else {
             fireAlertMessage.alertMessage(message: "Please check your location services.", viewController: viewController)
             return
         }
-        
         locationManager.distanceFilter = 1000
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         checkAuthorizationForLocation(locationManager: locationManager, viewController: viewController)

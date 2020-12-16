@@ -28,6 +28,8 @@ class MainViewController: UIViewController {
     let fireAlertMessage = AlertMessage()
     let configureIcon = ConfigureIcons()
     var hourlyWeatherData: [HourlyWeatherData] = []
+    let locationManager = CLLocationManager()
+    let locationService = LocationServices()
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -36,6 +38,8 @@ class MainViewController: UIViewController {
         configureCollectionViewCell()
         getWeatherData()
         
+        locationService.checkLocationServices(locationManager: locationManager, viewController: self)
+        locationManager.delegate = self
     }
 
     //MARK: - Network
@@ -86,4 +90,20 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return CGSize(width: 100, height: 100)
     }
     
+}
+
+//MARK: - CLLocationManagerDelegate
+extension MainViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        locationService.checkAuthorizationForLocation(locationManager: locationManager, viewController: self)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Location Manager Error: \(error.localizedDescription)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else { return }
+        getWeatherData(currentLocation: location)
+    }
 }
