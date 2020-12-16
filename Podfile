@@ -7,4 +7,5 @@ target 'Weather' do
 
   # Pods for Weather
 	pod 'Alamofire', '~> 5.2'
+        pod 'FloatingPanel'
 end
