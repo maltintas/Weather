@@ -16,6 +16,7 @@ class ContentViewController: UIViewController {
     
     //MARK: - Properties
     var matchedItems: [MKMapItem] = []
+    var cities: [City] = []
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -25,6 +26,7 @@ class ContentViewController: UIViewController {
         tableView.dataSource = self
         
         tableView.register(SearchResultTableViewCell.nib(), forCellReuseIdentifier: SearchResultTableViewCell.identifier)
+        tableView.register(CityTableViewCell.nib(), forCellReuseIdentifier: CityTableViewCell.identifier)
     }
 
 
@@ -34,14 +36,48 @@ class ContentViewController: UIViewController {
 //MARK: - TableView DataSource
 extension ContentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        matchedItems.count
+        if section == 0 {
+            return matchedItems.count
+        } else {
+            return cities.count
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 && matchedItems.count == 0 {
+            return ""
+        } else if section == 0 {
+            return "Search Results"
+        } else {
+            return "Saved Cities"
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let searchResultCell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier, for: indexPath) as! SearchResultTableViewCell
-        searchResultCell.textLabel?.text = matchedItems[indexPath.row].name
-       return searchResultCell
+        if indexPath.section == 0 {
+            let searchResultCell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier, for: indexPath) as! SearchResultTableViewCell
+            searchResultCell.textLabel?.text = matchedItems[indexPath.row].name
+            return searchResultCell
+        } else {
+            let cityCell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier, for: indexPath) as! CityTableViewCell
+            cityCell.textLabel?.text = cities[indexPath.row].name
+            return cityCell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            if editingStyle == .delete {
+                cities.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+            }
+        }
     }
     
 }

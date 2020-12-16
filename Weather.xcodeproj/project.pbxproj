@@ -35,6 +35,9 @@
 		F06D7151258A257D001CC2B5 /* HourlyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06D7150258A257D001CC2B5 /* HourlyViewModel.swift */; };
 		F097B86A258AB798004C1A16 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F097B868258AB798004C1A16 /* SearchResultTableViewCell.swift */; };
 		F097B86B258AB798004C1A16 /* SearchResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F097B869258AB798004C1A16 /* SearchResultTableViewCell.xib */; };
+		F097B86E258AB9EA004C1A16 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = F097B86D258AB9EA004C1A16 /* City.swift */; };
+		F097B872258ABA41004C1A16 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F097B870258ABA41004C1A16 /* CityTableViewCell.swift */; };
+		F097B873258ABA41004C1A16 /* CityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F097B871258ABA41004C1A16 /* CityTableViewCell.xib */; };
 		F0FA4BAF258AA582002CA8D2 /* MyFloatingPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */; };
 		F0FA4BB1258AA656002CA8D2 /* FloatingPanel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */; };
 		F0FA4BB3258AA7B9002CA8D2 /* SetFloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */; };
@@ -77,6 +80,9 @@
 		F06D7150258A257D001CC2B5 /* HourlyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyViewModel.swift; sourceTree = "<group>"; };
 		F097B868258AB798004C1A16 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		F097B869258AB798004C1A16 /* SearchResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultTableViewCell.xib; sourceTree = "<group>"; };
+		F097B86D258AB9EA004C1A16 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		F097B870258ABA41004C1A16 /* CityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
+		F097B871258ABA41004C1A16 /* CityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityTableViewCell.xib; sourceTree = "<group>"; };
 		F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFloatingPanelLayout.swift; sourceTree = "<group>"; };
 		F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPanel+Extension.swift"; sourceTree = "<group>"; };
 		F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFloatingPanel.swift; sourceTree = "<group>"; };
@@ -178,6 +184,7 @@
 		F06D70FF2588B574001CC2B5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F097B86C258AB9D6004C1A16 /* City Model */,
 				F06D71042588BA2B001CC2B5 /* Weather Model */,
 			);
 			path = Models;
@@ -212,6 +219,7 @@
 		F06D71022588B5BE001CC2B5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F097B86F258ABA21004C1A16 /* CityTableViewCell */,
 				F097B867258AB771004C1A16 /* SearchResultTableViewCell */,
 				F06D714F258A241F001CC2B5 /* HourlyCollectionViewCell */,
 			);
@@ -265,6 +273,23 @@
 				F097B869258AB798004C1A16 /* SearchResultTableViewCell.xib */,
 			);
 			path = SearchResultTableViewCell;
+			sourceTree = "<group>";
+		};
+		F097B86C258AB9D6004C1A16 /* City Model */ = {
+			isa = PBXGroup;
+			children = (
+				F097B86D258AB9EA004C1A16 /* City.swift */,
+			);
+			path = "City Model";
+			sourceTree = "<group>";
+		};
+		F097B86F258ABA21004C1A16 /* CityTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F097B870258ABA41004C1A16 /* CityTableViewCell.swift */,
+				F097B871258ABA41004C1A16 /* CityTableViewCell.xib */,
+			);
+			path = CityTableViewCell;
 			sourceTree = "<group>";
 		};
 		F0FA4BB4258AA8AC002CA8D2 /* ContentViewController */ = {
@@ -338,6 +363,7 @@
 			files = (
 				F06D70F32588B183001CC2B5 /* LaunchScreen.storyboard in Resources */,
 				F06D70F02588B183001CC2B5 /* Assets.xcassets in Resources */,
+				F097B873258ABA41004C1A16 /* CityTableViewCell.xib in Resources */,
 				F0FA4BB8258AA8C7002CA8D2 /* ContentViewController.xib in Resources */,
 				F06D70EE2588B181001CC2B5 /* Main.storyboard in Resources */,
 				F097B86B258AB798004C1A16 /* SearchResultTableViewCell.xib in Resources */,
@@ -397,6 +423,7 @@
 			files = (
 				F06D71142588C08C001CC2B5 /* ServiceClient.swift in Sources */,
 				F06D711C2588C50B001CC2B5 /* MainViewController.swift in Sources */,
+				F097B86E258AB9EA004C1A16 /* City.swift in Sources */,
 				F06D714A2589510B001CC2B5 /* ConfigureIcons.swift in Sources */,
 				F06D7146258943E2001CC2B5 /* AlertMessage.swift in Sources */,
 				F06D714225894046001CC2B5 /* CurrentWeatherViewModel.swift in Sources */,
@@ -416,6 +443,7 @@
 				F06D71202588C72E001CC2B5 /* UIColor+Extensions.swift in Sources */,
 				F06D71122588BED8001CC2B5 /* NetworkConstant.swift in Sources */,
 				F0FA4BB7258AA8C7002CA8D2 /* ContentViewController.swift in Sources */,
+				F097B872258ABA41004C1A16 /* CityTableViewCell.swift in Sources */,
 				F0FA4BAF258AA582002CA8D2 /* MyFloatingPanelLayout.swift in Sources */,
 				F06D710E2588BD1B001CC2B5 /* Daily.swift in Sources */,
 				F06D7151258A257D001CC2B5 /* HourlyViewModel.swift in Sources */,
