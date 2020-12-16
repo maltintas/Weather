@@ -43,11 +43,11 @@ struct ConfigureIcons {
     
     func configureTintColor(iconName: String) -> UIColor {
            switch iconName {
-           case "clear-day":
+           case "clear-day", "partly-cloudy-day":
                return .systemYellow
            case "clear-night", "partly-cloudy-night":
                return .parliementBlue()
-           case "cloudy", "rain", "partly-cloudy-day":
+           case "cloudy", "rain":
                return .systemBlue
            case "fog":
                return .opaqueSeparator

@@ -41,10 +41,10 @@ class MainViewController: UIViewController {
     //MARK: - Network
     
     func getWeatherData(currentLocation: CLLocation = CLLocation(latitude: (41.043163), longitude: (29.007007))){
-        WeatherClient.getWeather(latitude: "\(currentLocation.coordinate.latitude)", longitude: "\(currentLocation.coordinate.longitude)") { (data, error) in
+        WeatherClient.getWeather(latitude: "\(currentLocation.coordinate.latitude)", longitude: "\(currentLocation.coordinate.longitude)") {[weak self] (data, error) in
             print("Get Weather Error: \(String(describing: error?.localizedDescription))")
             if error?.localizedDescription == "URLSessionTask failed with error: The Internet connection appears to be offline." {
-                self.fireAlertMessage.alertMessage(message: "Please check your network connection.", viewController: self)
+                self?.fireAlertMessage.alertMessage(message: "Please check your network connection.", viewController: self!)
             }
             
             guard let currentWeather = data?.currently else { return }
@@ -52,11 +52,11 @@ class MainViewController: UIViewController {
             guard let hourlyData = data?.hourly?.hourlyData else {return }
             
             let currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherData: currentWeather, dailyWeatherData: firstDailyWeatherData)
-            currentWeatherViewModel.configureUIElements(mainVC: self)
+            currentWeatherViewModel.configureUIElements(mainVC: self!)
             
             DispatchQueue.main.async {
-                self.hourlyWeatherData = hourlyData
-                self.hourlyWeatherDataCollectionView.reloadData()
+                self?.hourlyWeatherData = hourlyData
+                self?.hourlyWeatherDataCollectionView.reloadData()
             }
         }
     }
