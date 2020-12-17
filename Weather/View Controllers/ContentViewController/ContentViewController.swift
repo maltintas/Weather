@@ -30,6 +30,9 @@ class ContentViewController: UIViewController {
         
         tableView.register(SearchResultTableViewCell.nib(), forCellReuseIdentifier: SearchResultTableViewCell.identifier)
         tableView.register(CityTableViewCell.nib(), forCellReuseIdentifier: CityTableViewCell.identifier)
+        
+        cities = Load.shared.cityLoad()
+        tableView.reloadData()
     }
 
 

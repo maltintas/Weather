@@ -55,10 +55,7 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let load = Load(cities: contentVC.cities)
         contentVC.searchBar.delegate = self
-        load.cityLoad()
-        print("viewDidApper")
     }
     
     //MARK: - Helper Methods

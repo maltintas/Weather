@@ -8,21 +8,21 @@
 
 import Foundation
 class Load {
+    public static let shared = Load()
     let documentCode = DocumentsCodes()
-    var cities: [City]
     
-    init(cities: [City]) {
-        self.cities = cities
-    }
-     func cityLoad(){
+
+     func cityLoad() -> [City] {
         let path = documentCode.dataFilePath()
-        if let data = try? Data(contentsOf: path) {
-            let decoder = PropertyListDecoder()
-            do {
-                cities = try decoder.decode([City].self, from: data)
-            } catch {
-                print("Error Decoder: \(error.localizedDescription)")
-            }
+        guard let data = try? Data(contentsOf: path) else {
+            return []
+        }
+        let decoder = PropertyListDecoder()
+        do {
+            return try decoder.decode([City].self, from: data)
+        } catch {
+            print("Error Decoder: \(error.localizedDescription)")
+            return []
         }
     }
 }
