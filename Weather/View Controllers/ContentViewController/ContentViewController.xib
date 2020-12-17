@@ -20,11 +20,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="iM9-fc-Gl6">
-                    <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                    <rect key="frame" x="0.0" y="64" width="414" height="56"/>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Omv-g5-z58">
-                    <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                    <rect key="frame" x="0.0" y="120" width="414" height="742"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
             </subviews>
@@ -36,7 +36,7 @@
                 <constraint firstItem="iM9-fc-Gl6" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="gX6-t6-uyO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Omv-g5-z58" secondAttribute="trailing" id="pbi-Wj-q54"/>
                 <constraint firstItem="Omv-g5-z58" firstAttribute="top" secondItem="iM9-fc-Gl6" secondAttribute="bottom" id="wgB-gq-4bG"/>
-                <constraint firstItem="iM9-fc-Gl6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wl5-QW-RZ8"/>
+                <constraint firstItem="iM9-fc-Gl6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="wl5-QW-RZ8"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="132" y="137"/>
