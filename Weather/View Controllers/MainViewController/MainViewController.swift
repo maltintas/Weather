@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
     let fpc = FloatingPanelController()
     lazy var contentVC = ContentViewController(nibName: "ContentViewController", bundle: nil)
     let setFloatingPanel = SetFloatingPanel()
+
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -54,7 +55,10 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        let load = Load(cities: contentVC.cities)
         contentVC.searchBar.delegate = self
+        load.cityLoad()
+        print("viewDidApper")
     }
     
     //MARK: - Helper Methods
@@ -224,7 +228,7 @@ extension MainViewController: UITableViewDelegate {
                 self.contentVC.cities.insert(City(name: self.contentVC.matchedItems[indexPath.row].name ?? "No City Information", cityLatitude: self.contentVC.matchedItems[indexPath.row].placemark.coordinate.latitude , cityLongitude: self.contentVC.matchedItems[indexPath.row].placemark.coordinate.longitude), at: 0)
                 self.contentGetWeatherHelper(latitude: matchedItemLatitude, longitude: matchedItemLongitude, fpc: self.fpc)
                 self.contentVC.city = self.contentVC.cities[indexPath.row]
-                
+                self.contentVC.save.saveCity(cities: self.contentVC.cities)
                 self.contentVC.matchedItems.removeAll()
                 self.contentVC.searchBar.text = ""
                 self.contentVC.tableView.reloadData()
@@ -235,5 +239,55 @@ extension MainViewController: UITableViewDelegate {
             contentGetWeatherHelper(latitude: citiesLatitude, longitude: citiesLongitude, fpc: fpc)
             self.contentVC.city = self.contentVC.cities[indexPath.row]
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 64
+        } else {
+            return 50
+        }
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header: UIView = {
+                  let searchResultHeader = UIView()
+            searchResultHeader.backgroundColor = .fontColor()
+            searchResultHeader.isHidden = true
+                   return searchResultHeader
+               }()
+        
+        if section == 0 {
+            let _: UILabel = {
+               let searchResultLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 370, height: 32))
+                searchResultLabel.textColor = .headerColor()
+                searchResultLabel.textAlignment = .center
+                searchResultLabel.font = UIFont(name: "Apple-SD-Gothic-Neo-Bold", size: 38)
+                if section == 0 && contentVC.matchedItems.count == 0 {
+                    searchResultLabel.text = ""
+                } else {
+                     header.isHidden.toggle()
+                     searchResultLabel.text = "Search Results"
+                }
+                header.addSubview(searchResultLabel)
+                return searchResultLabel
+            }()
+        } else if section == 1 {
+            let _: UILabel = {
+               let cityLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 370, height: 32))
+                cityLabel.textColor = .headerColor()
+                cityLabel.textAlignment = .center
+                cityLabel.font = UIFont(name: "Apple-SD-Gothic-Neo-Bold", size: 38)
+                if section == 1 && contentVC.cities.count == 0 {
+                    cityLabel.text = ""
+                    
+                } else {
+                    header.isHidden.toggle()
+                     cityLabel.text = "Saved City"
+                }
+                header.addSubview(cityLabel)
+                return cityLabel
+            }()
+        }
+        return header
     }
 }

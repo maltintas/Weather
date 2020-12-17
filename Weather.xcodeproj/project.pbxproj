@@ -38,6 +38,9 @@
 		F097B86E258AB9EA004C1A16 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = F097B86D258AB9EA004C1A16 /* City.swift */; };
 		F097B872258ABA41004C1A16 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F097B870258ABA41004C1A16 /* CityTableViewCell.swift */; };
 		F097B873258ABA41004C1A16 /* CityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F097B871258ABA41004C1A16 /* CityTableViewCell.xib */; };
+		F0BE621E258B5FC10036C73F /* DocumentsCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE621D258B5FC10036C73F /* DocumentsCodes.swift */; };
+		F0BE6221258B607B0036C73F /* Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE6220258B607B0036C73F /* Save.swift */; };
+		F0BE6223258B613A0036C73F /* Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE6222258B613A0036C73F /* Load.swift */; };
 		F0FA4BAF258AA582002CA8D2 /* MyFloatingPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */; };
 		F0FA4BB1258AA656002CA8D2 /* FloatingPanel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */; };
 		F0FA4BB3258AA7B9002CA8D2 /* SetFloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */; };
@@ -83,6 +86,9 @@
 		F097B86D258AB9EA004C1A16 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		F097B870258ABA41004C1A16 /* CityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		F097B871258ABA41004C1A16 /* CityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityTableViewCell.xib; sourceTree = "<group>"; };
+		F0BE621D258B5FC10036C73F /* DocumentsCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsCodes.swift; sourceTree = "<group>"; };
+		F0BE6220258B607B0036C73F /* Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Save.swift; sourceTree = "<group>"; };
+		F0BE6222258B613A0036C73F /* Load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Load.swift; sourceTree = "<group>"; };
 		F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFloatingPanelLayout.swift; sourceTree = "<group>"; };
 		F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPanel+Extension.swift"; sourceTree = "<group>"; };
 		F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFloatingPanel.swift; sourceTree = "<group>"; };
@@ -146,7 +152,6 @@
 				F06D70FF2588B574001CC2B5 /* Models */,
 				F06D71002588B57D001CC2B5 /* Network */,
 				F06D70FE2588B563001CC2B5 /* View Controllers */,
-				F0FA4BB4258AA8AC002CA8D2 /* ContentViewController */,
 				F06D71032588B5C6001CC2B5 /* View Models */,
 				F06D70FB2588B1D1001CC2B5 /* View Utilities */,
 				F06D71022588B5BE001CC2B5 /* Views */,
@@ -176,6 +181,7 @@
 		F06D70FE2588B563001CC2B5 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F0FA4BB4258AA8AC002CA8D2 /* ContentViewController */,
 				F06D71192588C4ED001CC2B5 /* MainViewController */,
 			);
 			path = "View Controllers";
@@ -204,14 +210,14 @@
 		F06D71012588B5AE001CC2B5 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				F06D711F2588C72E001CC2B5 /* UIColor+Extensions.swift */,
+				F0BE621F258B605D0036C73F /* Save and Load Helper */,
+				F0BE621C258B5E6A0036C73F /* Documents Helper */,
 				F06D71432589435B001CC2B5 /* DateFormats.swift */,
 				F06D7145258943E2001CC2B5 /* AlertMessage.swift */,
 				F06D714725894611001CC2B5 /* LocationServices.swift */,
 				F06D71492589510B001CC2B5 /* ConfigureIcons.swift */,
-				F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */,
-				F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */,
-				F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */,
+				F0BE621B258B5E460036C73F /* FloatingPanel Helper */,
+				F0BE621A258B5E320036C73F /* Extensions */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -290,6 +296,41 @@
 				F097B871258ABA41004C1A16 /* CityTableViewCell.xib */,
 			);
 			path = CityTableViewCell;
+			sourceTree = "<group>";
+		};
+		F0BE621A258B5E320036C73F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F06D711F2588C72E001CC2B5 /* UIColor+Extensions.swift */,
+				F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F0BE621B258B5E460036C73F /* FloatingPanel Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */,
+				F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */,
+			);
+			path = "FloatingPanel Helper";
+			sourceTree = "<group>";
+		};
+		F0BE621C258B5E6A0036C73F /* Documents Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F0BE621D258B5FC10036C73F /* DocumentsCodes.swift */,
+			);
+			path = "Documents Helper";
+			sourceTree = "<group>";
+		};
+		F0BE621F258B605D0036C73F /* Save and Load Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F0BE6220258B607B0036C73F /* Save.swift */,
+				F0BE6222258B613A0036C73F /* Load.swift */,
+			);
+			path = "Save and Load Helper";
 			sourceTree = "<group>";
 		};
 		F0FA4BB4258AA8AC002CA8D2 /* ContentViewController */ = {
@@ -433,12 +474,15 @@
 				F06D71442589435B001CC2B5 /* DateFormats.swift in Sources */,
 				F0FA4BB3258AA7B9002CA8D2 /* SetFloatingPanel.swift in Sources */,
 				F06D71082588BB3A001CC2B5 /* Currently.swift in Sources */,
+				F0BE6221258B607B0036C73F /* Save.swift in Sources */,
 				F06D71182588C452001CC2B5 /* WeatherClient.swift in Sources */,
 				F06D714825894611001CC2B5 /* LocationServices.swift in Sources */,
 				F06D70E92588B181001CC2B5 /* SceneDelegate.swift in Sources */,
+				F0BE621E258B5FC10036C73F /* DocumentsCodes.swift in Sources */,
 				F06D710C2588BCC5001CC2B5 /* HourlyWeatherData.swift in Sources */,
 				F06D71162588C2A5001CC2B5 /* WeatherRouter.swift in Sources */,
 				F0FA4BB1258AA656002CA8D2 /* FloatingPanel+Extension.swift in Sources */,
+				F0BE6223258B613A0036C73F /* Load.swift in Sources */,
 				F06D71102588BD83001CC2B5 /* DailyWeatherData.swift in Sources */,
 				F06D71202588C72E001CC2B5 /* UIColor+Extensions.swift in Sources */,
 				F06D71122588BED8001CC2B5 /* NetworkConstant.swift in Sources */,

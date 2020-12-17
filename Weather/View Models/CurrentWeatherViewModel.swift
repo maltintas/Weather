@@ -87,7 +87,5 @@ class CurrentWeatherViewModel {
         mainVC.windSpeedLabel.text = windSpeedText
         mainVC.precipIcon.image = UIImage(systemName: precipProbilityICon)
         mainVC.precipProbability.text = precipProbabilityText
-        
-        print(iconImageText)
     }
 }
