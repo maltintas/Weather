@@ -9,17 +9,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="Weather" customModuleProvider="target">
             <connections>
-                <outlet property="currentTempLabel" destination="l0M-4y-fuF" id="QIv-h8-3lw"/>
-                <outlet property="currentWeatherImageview" destination="tgI-ZT-unY" id="yK5-ma-17x"/>
                 <outlet property="hourlyWeatherDataCollectionView" destination="TbL-wy-0lx" id="XPD-0Z-6jY"/>
-                <outlet property="locationLabel" destination="3kx-jR-tYC" id="Tc3-4J-jbh"/>
+                <outlet property="locationLabel" destination="3kx-jR-tYC" id="MoP-Cz-sDu"/>
                 <outlet property="maxMinTempLabel" destination="Xw0-uZ-013" id="uPH-of-68d"/>
-                <outlet property="precipIcon" destination="pAP-O9-K55" id="hdl-cG-lhX"/>
-                <outlet property="precipProbability" destination="ntb-Ic-9bO" id="RfV-I1-5sJ"/>
-                <outlet property="summaryLabel" destination="Qk3-jY-6lU" id="Qwz-dT-yl3"/>
-                <outlet property="sunRiseTimeLabel" destination="sET-Pc-3tn" id="W01-ii-pmT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="windSpeedLabel" destination="6Ud-Bu-KpU" id="sT8-Td-HfE"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

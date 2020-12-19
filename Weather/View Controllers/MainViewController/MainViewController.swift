@@ -34,6 +34,8 @@ class MainViewController: UIViewController {
     let fpc = FloatingPanelController()
     lazy var contentVC = ContentViewController(nibName: "ContentViewController", bundle: nil)
     let setFloatingPanel = SetFloatingPanel()
+    
+    
 
     
     //MARK: - Life Cycle

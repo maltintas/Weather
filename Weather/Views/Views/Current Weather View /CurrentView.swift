@@ -17,6 +17,7 @@ class CurrentView: UIView {
     @IBOutlet weak var windSpeedLabel: UILabel!
     @IBOutlet weak var precipIcon: UIImageView!
     @IBOutlet weak var precipProbability: UILabel!
+    @IBOutlet weak var summaryLabel: UILabel!
     
 
 }
