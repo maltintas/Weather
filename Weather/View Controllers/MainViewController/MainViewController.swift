@@ -34,9 +34,20 @@ class MainViewController: UIViewController {
     let fpc = FloatingPanelController()
     lazy var contentVC = ContentViewController(nibName: "ContentViewController", bundle: nil)
     let setFloatingPanel = SetFloatingPanel()
-    
-    
 
+    let scrollView = UIScrollView()
+    let pageControl: UIPageControl = {
+       let pageControl = UIPageControl()
+        pageControl.numberOfPages = 3
+        pageControl.currentPage = 1
+        pageControl.currentPageIndicatorTintColor = .systemYellow
+        pageControl.pageIndicatorTintColor = .systemGray
+        return pageControl
+    }()
+    var allViews: [UIView] = []
+    let viewConfigure = Configure()
+    
+    
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -53,6 +64,23 @@ class MainViewController: UIViewController {
         fpc.delegate = self
         
         configureContentView()
+        
+        scrollView.delegate = self
+        pageControl.addTarget(self, action: #selector(pageControlDidChange(_:)), for: .valueChanged)
+        view.addSubview(scrollView)
+        view.addSubview(pageControl)
+        
+        configureSubViews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        pageControl.frame = CGRect(x: 10, y: view.frame.size.height - 195, width: view.frame.size.width - 20, height: 10)
+        scrollView.frame = CGRect(x: 0, y: 130, width: view.frame.size.width, height: 490)
+        
+        if scrollView.subviews.count == 2 {
+            configureScrollView()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,6 +93,50 @@ class MainViewController: UIViewController {
         getWeatherData(currentLocation: CLLocation(latitude: latitude, longitude: longitude))
         UIView.animate(withDuration: 0.40) {
             fpc.move(to: .tip, animated: false)
+        }
+    }
+    
+    @objc func pageControlDidChange(_ sender: UIPageControl){
+        let current = sender.currentPage
+        scrollView.setContentOffset(CGPoint(x: CGFloat(current) * view.frame.size.width, y: 0), animated: true)
+    }
+    
+    func configureScrollView(){
+        scrollView.contentSize = CGSize(width: view.frame.size.width * 3, height: scrollView.frame.size.height)
+        scrollView.isPagingEnabled = true
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        
+        for view in 0..<allViews.count {
+            let page = UIView(frame: CGRect(x: 0, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height))
+            page.addSubview(allViews[view])
+            scrollView.addSubview(page)
+        }
+        //Start with middle View
+        self.scrollView.contentOffset = CGPoint(x: 375, y: 5)
+    }
+    
+    func configureSubViews(){
+        if let detailTableView = Bundle.main.loadNibNamed("TableView", owner: self, options: nil)?.first as? TableView {
+            viewConfigure.configureTableView(tableView: detailTableView, xOrigin: 5, cornerRadius: 40)
+            //TODO: cell register
+            //TODO: tag
+            //TODO: delegate & dataSource
+            allViews.append(detailTableView)
+        }
+        
+        if let currentView = Bundle.main.loadNibNamed("CurrentView", owner: self, options: nil)?.first as? CurrentView {
+            viewConfigure.configureView(view: currentView, xOrigin: 380, cornerRadius: 40)
+            //TODO: viewModel
+            allViews.append(currentView)
+        }
+        
+        if let dailyTableView = Bundle.main.loadNibNamed("TableView", owner: self, options: nil)?.first as? TableView {
+            viewConfigure.configureTableView(tableView: dailyTableView, xOrigin: 755, cornerRadius: 40)
+            //TODO: cell register
+            //TODO: tag
+            //TODO: delegate & dataSource
+            allViews.append(dailyTableView)
         }
     }
 
@@ -288,5 +360,11 @@ extension MainViewController: UITableViewDelegate {
             }()
         }
         return header
+    }
+}
+
+extension MainViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        pageControl.currentPage = Int(floorf(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
     }
 }

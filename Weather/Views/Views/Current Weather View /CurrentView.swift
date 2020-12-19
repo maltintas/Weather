@@ -11,6 +11,7 @@ import UIKit
 class CurrentView: UIView {
 
    //MARK: - Outlets
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var currentWeatherImageview: UIImageView!
     @IBOutlet weak var sunRiseTimeLabel: UILabel!

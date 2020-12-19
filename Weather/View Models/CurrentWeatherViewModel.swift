@@ -77,15 +77,15 @@ class CurrentWeatherViewModel {
    
     
     func configureUIElements(mainVC: MainViewController){
-        mainVC.locationLabel.text = currentLocatinText
-        mainVC.maxMinTempLabel.text = maxMinTempText
-        mainVC.currentWeatherImageview.image = UIImage(systemName: iconImageText)
-        mainVC.currentWeatherImageview.tintColor = iconImageTintColor
-        mainVC.currentTempLabel.text = currentTempText
-        mainVC.summaryLabel.text = summaryText
-        mainVC.sunRiseTimeLabel.text = sunRiseTimeText
-        mainVC.windSpeedLabel.text = windSpeedText
-        mainVC.precipIcon.image = UIImage(systemName: precipProbilityICon)
-        mainVC.precipProbability.text = precipProbabilityText
+//        mainVC.locationLabel.text = currentLocatinText
+//        mainVC.maxMinTempLabel.text = maxMinTempText
+//        mainVC.currentWeatherImageview.image = UIImage(systemName: iconImageText)
+//        mainVC.currentWeatherImageview.tintColor = iconImageTintColor
+//        mainVC.currentTempLabel.text = currentTempText
+//        mainVC.summaryLabel.text = summaryText
+//        mainVC.sunRiseTimeLabel.text = sunRiseTimeText
+//        mainVC.windSpeedLabel.text = windSpeedText
+//        mainVC.precipIcon.image = UIImage(systemName: precipProbilityICon)
+//        mainVC.precipProbability.text = precipProbabilityText
     }
 }
