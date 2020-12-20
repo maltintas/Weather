@@ -55,7 +55,7 @@ class CurrentWeatherViewModel {
     }
     
     var precipProbilityICon: String {
-        guard let precipType = dailyWeatherData.precipType else {return "_"}
+        guard let precipType = dailyWeatherData.precipType else {return "sun.min.fill"}
         return configureIcon.setIcons(iconName: precipType)
     }
     
@@ -76,16 +76,21 @@ class CurrentWeatherViewModel {
     
    
     
-    func configureUIElements(mainVC: MainViewController){
-//        mainVC.locationLabel.text = currentLocatinText
-//        mainVC.maxMinTempLabel.text = maxMinTempText
-//        mainVC.currentWeatherImageview.image = UIImage(systemName: iconImageText)
-//        mainVC.currentWeatherImageview.tintColor = iconImageTintColor
-//        mainVC.currentTempLabel.text = currentTempText
-//        mainVC.summaryLabel.text = summaryText
-//        mainVC.sunRiseTimeLabel.text = sunRiseTimeText
-//        mainVC.windSpeedLabel.text = windSpeedText
-//        mainVC.precipIcon.image = UIImage(systemName: precipProbilityICon)
-//        mainVC.precipProbability.text = precipProbabilityText
+    func configureTopUIElements(mainVC: MainViewController){
+        mainVC.locationLabel.text = currentLocatinText
+        mainVC.maxMinTempLabel.text = maxMinTempText
+
     }
+    
+    func configureMidUIElements(currentView: CurrentView){
+        currentView.currentWeatherImageview.image = UIImage(systemName: iconImageText)
+        currentView.currentWeatherImageview.tintColor = iconImageTintColor
+        currentView.currentTempLabel.text = currentTempText
+        currentView.summaryLabel.text = summaryText
+        currentView.sunRiseTimeLabel.text = sunRiseTimeText
+        currentView.windSpeedLabel.text = windSpeedText
+        currentView.precipIcon.image = UIImage(systemName: precipProbilityICon)
+        currentView.precipProbability.text = precipProbabilityText
+    }
+    
 }

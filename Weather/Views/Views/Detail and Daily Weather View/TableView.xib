@@ -9,24 +9,27 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TableView" customModule="Weather" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="410" height="490"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sPS-Gq-qpe">
-                    <rect key="frame" x="5" y="5" width="400" height="480"/>
+                    <rect key="frame" x="5" y="-2" width="400" height="494"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
             <constraints>
-                <constraint firstItem="sPS-Gq-qpe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="83Y-v7-otC"/>
+                <constraint firstItem="sPS-Gq-qpe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-2" id="83Y-v7-otC"/>
                 <constraint firstItem="sPS-Gq-qpe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="NLx-NB-KTH"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="sPS-Gq-qpe" secondAttribute="bottom" constant="5" id="esu-Qv-h12"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="sPS-Gq-qpe" secondAttribute="bottom" constant="-2" id="esu-Qv-h12"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="sPS-Gq-qpe" secondAttribute="trailing" constant="5" id="yiP-eG-SRW"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="tableView" destination="sPS-Gq-qpe" id="bqC-50-AW8"/>
+            </connections>
             <point key="canvasLocation" x="132" y="133"/>
         </view>
     </objects>

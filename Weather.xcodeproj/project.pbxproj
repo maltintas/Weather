@@ -50,6 +50,8 @@
 		F0BE621E258B5FC10036C73F /* DocumentsCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE621D258B5FC10036C73F /* DocumentsCodes.swift */; };
 		F0BE6221258B607B0036C73F /* Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE6220258B607B0036C73F /* Save.swift */; };
 		F0BE6223258B613A0036C73F /* Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE6222258B613A0036C73F /* Load.swift */; };
+		F0D7C288258F767100BC02D7 /* DailyWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D7C287258F767100BC02D7 /* DailyWeatherViewModel.swift */; };
+		F0D7C28A258F7AEE00BC02D7 /* DetailWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D7C289258F7AEE00BC02D7 /* DetailWeatherViewModel.swift */; };
 		F0FA4BAF258AA582002CA8D2 /* MyFloatingPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */; };
 		F0FA4BB1258AA656002CA8D2 /* FloatingPanel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */; };
 		F0FA4BB3258AA7B9002CA8D2 /* SetFloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */; };
@@ -107,6 +109,8 @@
 		F0BE621D258B5FC10036C73F /* DocumentsCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsCodes.swift; sourceTree = "<group>"; };
 		F0BE6220258B607B0036C73F /* Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Save.swift; sourceTree = "<group>"; };
 		F0BE6222258B613A0036C73F /* Load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Load.swift; sourceTree = "<group>"; };
+		F0D7C287258F767100BC02D7 /* DailyWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherViewModel.swift; sourceTree = "<group>"; };
+		F0D7C289258F7AEE00BC02D7 /* DetailWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWeatherViewModel.swift; sourceTree = "<group>"; };
 		F0FA4BAE258AA582002CA8D2 /* MyFloatingPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFloatingPanelLayout.swift; sourceTree = "<group>"; };
 		F0FA4BB0258AA656002CA8D2 /* FloatingPanel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPanel+Extension.swift"; sourceTree = "<group>"; };
 		F0FA4BB2258AA7B9002CA8D2 /* SetFloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFloatingPanel.swift; sourceTree = "<group>"; };
@@ -321,6 +325,8 @@
 			children = (
 				F06D714125894046001CC2B5 /* CurrentWeatherViewModel.swift */,
 				F06D7150258A257D001CC2B5 /* HourlyViewModel.swift */,
+				F0D7C287258F767100BC02D7 /* DailyWeatherViewModel.swift */,
+				F0D7C289258F7AEE00BC02D7 /* DetailWeatherViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -571,6 +577,7 @@
 				F06D70E92588B181001CC2B5 /* SceneDelegate.swift in Sources */,
 				F0BE621E258B5FC10036C73F /* DocumentsCodes.swift in Sources */,
 				F06D710C2588BCC5001CC2B5 /* HourlyWeatherData.swift in Sources */,
+				F0D7C288258F767100BC02D7 /* DailyWeatherViewModel.swift in Sources */,
 				F06D71162588C2A5001CC2B5 /* WeatherRouter.swift in Sources */,
 				F0FA4BB1258AA656002CA8D2 /* FloatingPanel+Extension.swift in Sources */,
 				F0213E41258E85340011460A /* DetailTableViewCell.swift in Sources */,
@@ -583,6 +590,7 @@
 				F0FA4BAF258AA582002CA8D2 /* MyFloatingPanelLayout.swift in Sources */,
 				F06D710E2588BD1B001CC2B5 /* Daily.swift in Sources */,
 				F0213E50258E86C30011460A /* TableView.swift in Sources */,
+				F0D7C28A258F7AEE00BC02D7 /* DetailWeatherViewModel.swift in Sources */,
 				F06D7151258A257D001CC2B5 /* HourlyViewModel.swift in Sources */,
 				F097B86A258AB798004C1A16 /* SearchResultTableViewCell.swift in Sources */,
 				F06D714D258A241B001CC2B5 /* HourlyCollectionViewCell.swift in Sources */,

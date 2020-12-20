@@ -19,6 +19,15 @@ struct DailyWeatherData: Codable {
     let temperatureMin : Double?
     let temperatureMax : Double?
     let sunriseTime: Int?
+    let sunsetTime : Int?
+    let dewPoint: Double?
+    let humidity: Double?
+    let pressure: Double?
+    let visibility: Double?
+    let uvIndex: Int?
+    let windGustTime: Int?
+    let temperatureHighTime: Int?
+    let temperatureLowTime: Int?
     
     enum CodingKeys: CodingKey {
         case time
@@ -32,5 +41,14 @@ struct DailyWeatherData: Codable {
         case temperatureMin
         case temperatureMax
         case sunriseTime
+        case dewPoint
+        case humidity
+        case pressure
+        case visibility
+        case uvIndex
+        case windGustTime
+        case temperatureHighTime
+        case temperatureLowTime
+        case sunsetTime
     }
 }

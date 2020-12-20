@@ -15,13 +15,6 @@ class MainViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var maxMinTempLabel: UILabel!
-    @IBOutlet weak var currentWeatherImageview: UIImageView!
-    @IBOutlet weak var currentTempLabel: UILabel!
-    @IBOutlet weak var summaryLabel: UILabel!
-    @IBOutlet weak var sunRiseTimeLabel: UILabel!
-    @IBOutlet weak var windSpeedLabel: UILabel!
-    @IBOutlet weak var precipIcon: UIImageView!
-    @IBOutlet weak var precipProbability: UILabel!
     @IBOutlet weak var hourlyWeatherDataCollectionView: UICollectionView!
     
     
@@ -29,6 +22,7 @@ class MainViewController: UIViewController {
     let fireAlertMessage = AlertMessage()
     let configureIcon = ConfigureIcons()
     var hourlyWeatherData: [HourlyWeatherData] = []
+    var dailyWeather = [DailyWeatherData]()
     let locationManager = CLLocationManager()
     let locationService = LocationServices()
     let fpc = FloatingPanelController()
@@ -46,13 +40,20 @@ class MainViewController: UIViewController {
     }()
     var allViews: [UIView] = []
     let viewConfigure = Configure()
-    
+    lazy var currentViewObject = CurrentView()
     
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureSubViews()
+        scrollView.delegate = self
+               pageControl.addTarget(self, action: #selector(pageControlDidChange(_:)), for: .valueChanged)
+               view.addSubview(scrollView)
+               view.addSubview(pageControl)
+        
+        
         configureCollectionViewCell()
         getWeatherData()
         
@@ -65,17 +66,12 @@ class MainViewController: UIViewController {
         
         configureContentView()
         
-        scrollView.delegate = self
-        pageControl.addTarget(self, action: #selector(pageControlDidChange(_:)), for: .valueChanged)
-        view.addSubview(scrollView)
-        view.addSubview(pageControl)
         
-        configureSubViews()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        pageControl.frame = CGRect(x: 10, y: view.frame.size.height - 195, width: view.frame.size.width - 20, height: 10)
+        pageControl.frame = CGRect(x: 20, y: view.frame.size.height - 195, width: view.frame.size.width - 20, height: 10)
         scrollView.frame = CGRect(x: 0, y: 130, width: view.frame.size.width, height: 490)
         
         if scrollView.subviews.count == 2 {
@@ -115,27 +111,30 @@ class MainViewController: UIViewController {
         //Start with middle View
         self.scrollView.contentOffset = CGPoint(x: 375, y: 5)
     }
-    
+    //MARK: - Configure SubViews
     func configureSubViews(){
-        if let detailTableView = Bundle.main.loadNibNamed("TableView", owner: self, options: nil)?.first as? TableView {
+        if let detailTableView = TableView.loadNib(owner: self) as? TableView {
             viewConfigure.configureTableView(tableView: detailTableView, xOrigin: 5, cornerRadius: 40)
-            //TODO: cell register
-            //TODO: tag
-            //TODO: delegate & dataSource
+            detailTableView.tableView.register(DetailTableViewCell.nib(), forCellReuseIdentifier: DetailTableViewCell.identifier)
+            detailTableView.tableView.tag = 1001
+            detailTableView.tableView.delegate = self
+            detailTableView.tableView.dataSource = self
+            detailTableView.tableView.tableFooterView = UIView()
             allViews.append(detailTableView)
         }
         
-        if let currentView = Bundle.main.loadNibNamed("CurrentView", owner: self, options: nil)?.first as? CurrentView {
-            viewConfigure.configureView(view: currentView, xOrigin: 380, cornerRadius: 40)
-            //TODO: viewModel
-            allViews.append(currentView)
-        }
+        guard let curretView = CurrentView.loadNib(owner: self) as? CurrentView else { return }
+        viewConfigure.configureView(view: curretView, xOrigin: 380, cornerRadius: 40)
+        currentViewObject = curretView
+        allViews.append(curretView)
         
-        if let dailyTableView = Bundle.main.loadNibNamed("TableView", owner: self, options: nil)?.first as? TableView {
+        if let dailyTableView = TableView.loadNib(owner: self) as? TableView {
             viewConfigure.configureTableView(tableView: dailyTableView, xOrigin: 755, cornerRadius: 40)
-            //TODO: cell register
-            //TODO: tag
-            //TODO: delegate & dataSource
+            dailyTableView.tableView.register(DaysTableViewCell.nib(), forCellReuseIdentifier: DaysTableViewCell.identifier)
+            dailyTableView.tableView.tag = 1002
+            dailyTableView.tableView.dataSource = self
+            dailyTableView.tableView.delegate = self
+            dailyTableView.tableView.tableFooterView = UIView()
             allViews.append(dailyTableView)
         }
     }
@@ -150,11 +149,23 @@ class MainViewController: UIViewController {
             }
             
             guard let currentWeather = data?.currently else { return }
+            guard let dailyWeatherData = data?.daily?.dailyData else { return }
             guard let firstDailyWeatherData = data?.daily?.dailyData?.first else { return }
             guard let hourlyData = data?.hourly?.hourlyData else {return }
             
+            if (self?.dailyWeather.isEmpty)! {
+                self?.dailyWeather.append(contentsOf: dailyWeatherData)
+                self?.dailyWeather.removeFirst()
+            } else {
+                self?.dailyWeather.removeAll()
+                self?.dailyWeather.append(contentsOf: dailyWeatherData)
+                self?.dailyWeather.removeFirst()
+            }
+            
+            
             let currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherData: currentWeather, dailyWeatherData: firstDailyWeatherData, city: self?.contentVC.city)
-            currentWeatherViewModel.configureUIElements(mainVC: self!)
+            currentWeatherViewModel.configureTopUIElements(mainVC: self!)
+            currentWeatherViewModel.configureMidUIElements(currentView: self!.currentViewObject)
             
             DispatchQueue.main.async {
                 self?.hourlyWeatherData = hourlyData
@@ -283,88 +294,132 @@ extension MainViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        deactive(searchBar: contentVC.searchBar)
-        
-        if indexPath.section == 0 {
-            let matchedItemLatitude = contentVC.matchedItems[indexPath.row].placemark.coordinate.latitude
-            let matchedItemLongitude = contentVC.matchedItems[indexPath.row].placemark.coordinate.longitude
+        if tableView.tag == 1003 {
+            tableView.deselectRow(at: indexPath, animated: true)
+            deactive(searchBar: contentVC.searchBar)
             
-            //Prevent to add same city to cities array
-            guard let cityName = contentVC.matchedItems[indexPath.row].name else { return }
-            for city in 0..<contentVC.cities.count {
-                guard cityName != contentVC.cities[city].name else {return }
-            }
-            DispatchQueue.main.async {
-                self.contentVC.cities.insert(City(name: self.contentVC.matchedItems[indexPath.row].name ?? "No City Information", cityLatitude: self.contentVC.matchedItems[indexPath.row].placemark.coordinate.latitude , cityLongitude: self.contentVC.matchedItems[indexPath.row].placemark.coordinate.longitude), at: 0)
-                self.contentGetWeatherHelper(latitude: matchedItemLatitude, longitude: matchedItemLongitude, fpc: self.fpc)
+            if indexPath.section == 0 {
+                let matchedItemLatitude = contentVC.matchedItems[indexPath.row].placemark.coordinate.latitude
+                let matchedItemLongitude = contentVC.matchedItems[indexPath.row].placemark.coordinate.longitude
+                
+                //Prevent to add same city to cities array
+                guard let cityName = contentVC.matchedItems[indexPath.row].name else { return }
+                for city in 0..<contentVC.cities.count {
+                    guard cityName != contentVC.cities[city].name else {return }
+                }
+                DispatchQueue.main.async {
+                    self.contentVC.cities.insert(City(name: self.contentVC.matchedItems[indexPath.row].name ?? "No City Information", cityLatitude: self.contentVC.matchedItems[indexPath.row].placemark.coordinate.latitude , cityLongitude: self.contentVC.matchedItems[indexPath.row].placemark.coordinate.longitude), at: 0)
+                    self.contentGetWeatherHelper(latitude: matchedItemLatitude, longitude: matchedItemLongitude, fpc: self.fpc)
+                    self.contentVC.city = self.contentVC.cities[indexPath.row]
+                    self.contentVC.save.saveCity(cities: self.contentVC.cities)
+                    self.contentVC.matchedItems.removeAll()
+                    self.contentVC.searchBar.text = ""
+                    self.contentVC.tableView.reloadData()
+                }
+            } else if indexPath.section == 1 {
+                let citiesLatitude = contentVC.cities[indexPath.row].cityLatitude
+                let citiesLongitude = contentVC.cities[indexPath.row].cityLongitude
+                contentGetWeatherHelper(latitude: citiesLatitude, longitude: citiesLongitude, fpc: fpc)
                 self.contentVC.city = self.contentVC.cities[indexPath.row]
-                self.contentVC.save.saveCity(cities: self.contentVC.cities)
-                self.contentVC.matchedItems.removeAll()
-                self.contentVC.searchBar.text = ""
-                self.contentVC.tableView.reloadData()
             }
-        } else if indexPath.section == 1 {
-            let citiesLatitude = contentVC.cities[indexPath.row].cityLatitude
-            let citiesLongitude = contentVC.cities[indexPath.row].cityLongitude
-            contentGetWeatherHelper(latitude: citiesLatitude, longitude: citiesLongitude, fpc: fpc)
-            self.contentVC.city = self.contentVC.cities[indexPath.row]
         }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 64
-        } else {
-            return 50
+        if tableView.tag == 1003 {
+            if indexPath.section == 0 {
+                return 64
+            } else {
+                return 50
+            }
         }
+        return 50
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header: UIView = {
-                  let searchResultHeader = UIView()
-            searchResultHeader.backgroundColor = .fontColor()
-            searchResultHeader.isHidden = true
-                   return searchResultHeader
-               }()
-        
-        if section == 0 {
-            let _: UILabel = {
-               let searchResultLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 370, height: 32))
-                searchResultLabel.textColor = .headerColor()
-                searchResultLabel.textAlignment = .center
-                searchResultLabel.font = UIFont(name: "Apple-SD-Gothic-Neo-Bold", size: 38)
-                if section == 0 && contentVC.matchedItems.count == 0 {
-                    searchResultLabel.text = ""
-                } else {
-                     header.isHidden.toggle()
-                     searchResultLabel.text = "Search Results"
-                }
-                header.addSubview(searchResultLabel)
-                return searchResultLabel
+      
+        if tableView.tag == 1003 {
+            
+            let header: UIView = {
+                let searchResultHeader = UIView()
+                searchResultHeader.backgroundColor = .fontColor()
+                searchResultHeader.isHidden = true
+                return searchResultHeader
             }()
-        } else if section == 1 {
-            let _: UILabel = {
-               let cityLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 370, height: 32))
-                cityLabel.textColor = .headerColor()
-                cityLabel.textAlignment = .center
-                cityLabel.font = UIFont(name: "Apple-SD-Gothic-Neo-Bold", size: 38)
-                if section == 1 && contentVC.cities.count == 0 {
-                    cityLabel.text = ""
-                    
-                } else {
-                    header.isHidden.toggle()
-                     cityLabel.text = "Saved City"
-                }
-                header.addSubview(cityLabel)
-                return cityLabel
-            }()
+            
+            if section == 0 {
+                let _: UILabel = {
+                    let searchResultLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 370, height: 32))
+                    searchResultLabel.textColor = .headerColor()
+                    searchResultLabel.textAlignment = .center
+                    searchResultLabel.font = UIFont(name: "Apple-SD-Gothic-Neo-Bold", size: 38)
+                    if section == 0 && contentVC.matchedItems.count == 0 {
+                        searchResultLabel.text = ""
+                    } else {
+                        header.isHidden.toggle()
+                        searchResultLabel.text = "Search Results"
+                    }
+                    header.addSubview(searchResultLabel)
+                    return searchResultLabel
+                }()
+            } else if section == 1 {
+                let _: UILabel = {
+                    let cityLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 370, height: 32))
+                    cityLabel.textColor = .headerColor()
+                    cityLabel.textAlignment = .center
+                    cityLabel.font = UIFont(name: "Apple-SD-Gothic-Neo-Bold", size: 38)
+                    if section == 1 && contentVC.cities.count == 0 {
+                        cityLabel.text = ""
+                        
+                    } else {
+                        header.isHidden.toggle()
+                        cityLabel.text = "Saved City"
+                    }
+                    header.addSubview(cityLabel)
+                    return cityLabel
+                }()
+            }
+            return header
+        } else {
+            return UIView()
         }
-        return header
     }
+        
 }
 
 extension MainViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(floorf(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
+    }
+}
+
+
+extension MainViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView.tag == 1001 {
+            return 10
+        } else if tableView.tag == 1002 {
+           return dailyWeather.count
+        }
+        return 9
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView.tag == 1001 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: DetailTableViewCell.identifier, for: indexPath) as! DetailTableViewCell
+            guard let detailData = dailyWeather.first else { return UITableViewCell()}
+            let detailViewModel = DetailWeatherViewModel(dailyWeatherData: detailData )
+            detailViewModel.configure(cell: cell, indexPath: indexPath)
+            
+            return cell
+        } else if tableView.tag == 1002 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: DaysTableViewCell.identifier, for: indexPath) as! DaysTableViewCell
+            let dailyViewModel = DailyWeatherViewModel(dailyWeatherData: dailyWeather[indexPath.row])
+            tableView.reloadData()
+            dailyViewModel.configure(cell: cell)
+            
+        }
+        return UITableViewCell()
     }
 }

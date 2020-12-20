@@ -12,4 +12,7 @@ class TableView: UIView {
 
     @IBOutlet weak var tableView: UITableView!
     
+    static func loadNib(owner: UIViewController) -> Any? {
+        Bundle.main.loadNibNamed("TableView", owner: owner, options: nil)?.first
+    }
 }

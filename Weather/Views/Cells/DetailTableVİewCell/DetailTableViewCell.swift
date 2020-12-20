@@ -10,6 +10,11 @@ import UIKit
 
 class DetailTableViewCell: UITableViewCell {
     
+    //MARK: - Outlets
+    @IBOutlet weak var iconImage: UIImageView!
+    @IBOutlet weak var detailLabel: UILabel!
+    
+    
     static let identifier = "DetailTableViewCell"
 
     override func awakeFromNib() {
