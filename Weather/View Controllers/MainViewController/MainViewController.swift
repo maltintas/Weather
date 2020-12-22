@@ -361,7 +361,12 @@ extension MainViewController: UITableViewDelegate {
                         
                     } else {
                         header.isHidden.toggle()
-                        cityLabel.text = "Saved City"
+                        if contentVC.cities.count == 1 {
+                            cityLabel.text = "Saved City"
+                        } else if contentVC.cities.count > 1 {
+                            cityLabel.text = "Saved Cities"
+                        }
+                        
                     }
                     header.addSubview(cityLabel)
                     return cityLabel

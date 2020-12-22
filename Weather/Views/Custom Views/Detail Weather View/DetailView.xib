@@ -325,7 +325,7 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstItem="3Es-ZR-A2c" firstAttribute="centerX" secondItem="VLB-rt-GMe" secondAttribute="centerX" id="0rN-KF-TM1"/>
                         <constraint firstAttribute="bottom" secondItem="3Es-ZR-A2c" secondAttribute="bottom" constant="16" id="6K9-IU-Gec"/>
