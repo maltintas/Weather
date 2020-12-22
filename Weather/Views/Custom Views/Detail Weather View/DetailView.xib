@@ -26,9 +26,6 @@
                             <state key="normal" title="Powered by Dark Sky">
                                 <color key="titleColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
-                            <connections>
-                                <action selector="poweredBy:" destination="iN0-l3-epB" eventType="touchUpInside" id="PAv-M5-tF9"/>
-                            </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="qya-dD-rzO">
                             <rect key="frame" x="268" y="50" width="124" height="358.5"/>
@@ -162,8 +159,11 @@
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="DVY-aq-7TE" firstAttribute="top" secondItem="E7i-3g-ZiV" secondAttribute="bottom" constant="3" id="4uw-AM-HVg"/>
                                         <constraint firstItem="vp8-IH-8WD" firstAttribute="leading" secondItem="I7C-QG-LZX" secondAttribute="leading" constant="35" id="P9y-A4-r1g"/>
+                                        <constraint firstAttribute="trailing" secondItem="E7i-3g-ZiV" secondAttribute="trailing" id="Rea-mc-58Z"/>
                                         <constraint firstItem="E7i-3g-ZiV" firstAttribute="leading" secondItem="I7C-QG-LZX" secondAttribute="leading" constant="90" id="ce6-Tj-uX2"/>
+                                        <constraint firstItem="E7i-3g-ZiV" firstAttribute="top" secondItem="I7C-QG-LZX" secondAttribute="top" id="uu6-Im-iiI"/>
                                     </constraints>
                                 </stackView>
                             </subviews>
@@ -350,6 +350,7 @@
             <connections>
                 <outlet property="TempHighLabel" destination="Ec3-AS-htV" id="ChU-cA-7kK"/>
                 <outlet property="containerView" destination="VLB-rt-GMe" id="tTr-ES-L7j"/>
+                <outlet property="darkSkyButton" destination="3Es-ZR-A2c" id="3Dc-kX-ZFY"/>
                 <outlet property="dewPointLabel" destination="NPt-7f-nkc" id="yCT-9S-ktE"/>
                 <outlet property="humidityLabel" destination="x8O-Dp-yMV" id="nBv-ge-iMq"/>
                 <outlet property="pressureLabel" destination="diS-VC-HhS" id="Bdq-gs-v2X"/>

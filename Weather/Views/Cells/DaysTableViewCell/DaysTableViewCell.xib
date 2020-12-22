@@ -83,8 +83,8 @@
             <connections>
                 <outlet property="dayLabel" destination="hkR-zW-vPf" id="Xhh-9y-f8b"/>
                 <outlet property="iconImage" destination="w0i-49-XLE" id="h7h-hO-h1Z"/>
-                <outlet property="maxTempLabel" destination="8yD-t9-ULm" id="wTm-E8-gsc"/>
-                <outlet property="minTempLabel" destination="jkY-fJ-hTs" id="rLk-ey-JAN"/>
+                <outlet property="maxTempLabel" destination="jkY-fJ-hTs" id="yC4-Ub-ay1"/>
+                <outlet property="minTempLabel" destination="8yD-t9-ULm" id="4LL-IW-dpF"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="135.9375"/>
         </tableViewCell>

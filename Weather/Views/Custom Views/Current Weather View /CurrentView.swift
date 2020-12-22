@@ -24,4 +24,13 @@ class CurrentView: UIView {
     static func loadNib(owner: UIViewController) -> Any? {
         Bundle.main.loadNibNamed("CurrentView", owner: owner, options: nil)?.first
     }
+    
+    func configureView() {
+        self.frame.size.height = 480
+        self.frame.size.width = 365
+        self.frame.origin.x = 380
+        self.frame.origin.y = 5
+        self.layer.cornerRadius = 40
+        containerView.layer.cornerRadius = 40
+    }
 }

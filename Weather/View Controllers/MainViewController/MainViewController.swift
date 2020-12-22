@@ -38,7 +38,6 @@ class MainViewController: UIViewController {
         return pageControl
     }()
     var allViews: [UIView] = []
-    let viewConfigure = Configure()
     lazy var currentViewObject = CurrentView()
     lazy var detailViewObject = DetailUIView()
     lazy var daysViewObject = DailyView()
@@ -113,25 +112,21 @@ class MainViewController: UIViewController {
     }
     //MARK: - Configure SubViews
     func configureSubViews(){
-        
-        if let weatherDayView = DailyView.loadNib(owner: self) as? DailyView {
-            weatherDayView.configureView()
-            viewConfigure.configureDaysWeatherView(tableView: weatherDayView, xOrigin: 5, cornerRadius: 40)
-            daysViewObject = weatherDayView
-            allViews.append(weatherDayView)
-           
-        }
+    
+        guard let weatherDayView = DailyView.loadNib(owner: self) as? DailyView else { return }
+        weatherDayView.configureView()
+        daysViewObject = weatherDayView
+        allViews.append(weatherDayView)
         
         guard let curretView = CurrentView.loadNib(owner: self) as? CurrentView else { return }
-        viewConfigure.configureView(view: curretView, xOrigin: 380, cornerRadius: 40)
+        curretView.configureView()
         currentViewObject = curretView
         allViews.append(curretView)
         
         guard let detailView = DetailUIView.loadNib(owner: self) as? DetailUIView else { return }
-        viewConfigure.configureView(view: detailView, xOrigin: 755, cornerRadius: 40)
+        detailView.configureView()
         detailViewObject = detailView
         allViews.append(detailView)
-        
     }
 
     //MARK: - Network
@@ -149,19 +144,8 @@ class MainViewController: UIViewController {
             guard let firstDailyWeatherData = data?.daily?.dailyData?.first else { return }
             guard let hourlyData = data?.hourly?.hourlyData else {return }
 
-
             
-            if !self.daysViewObject.allDailyWeatherData.isEmpty {
-                self.daysViewObject.allDailyWeatherData.removeAll()
-                self.daysViewObject.allDailyWeatherData.append(contentsOf: dailyWeatherData)
-                self.daysViewObject.allDailyWeatherData.removeFirst()
-                self.daysViewObject.tableView.reloadData()
-            } else {
-                self.daysViewObject.allDailyWeatherData.append(contentsOf: dailyWeatherData)
-                self.daysViewObject.allDailyWeatherData.removeFirst()
-                self.daysViewObject.tableView.reloadData()
-            }
-            
+            self.daysViewObject.configureAllWeatherData(newData: dailyWeatherData)
             
             let currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherData: currentWeather, dailyWeatherData: firstDailyWeatherData, city: self.contentVC.city)
             currentWeatherViewModel.configureTopUIElements(mainVC: self)
@@ -203,7 +187,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 100)
     }
-    
 }
 
 //MARK: - CLLocationManagerDelegate

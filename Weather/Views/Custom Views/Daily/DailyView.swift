@@ -10,13 +10,34 @@ import UIKit
 
 class DailyView: UIView {
     
+    //MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     
+    //MARK: - Properties
     var allDailyWeatherData: [DailyWeatherData] = []
     
-    
+    //MARK: - Helper Methods
     func configureView(){
         configureTableView()
+        self.frame.size.height = 480
+        self.frame.size.width = 365
+        self.frame.origin.x = 5
+        self.frame.origin.y = 5
+        self.layer.cornerRadius = 40
+        tableView.layer.cornerRadius = 40
+    }
+    
+    func configureAllWeatherData(newData: [DailyWeatherData]){
+        if !allDailyWeatherData.isEmpty{
+            allDailyWeatherData.removeAll()
+            allDailyWeatherData.append(contentsOf: newData)
+            allDailyWeatherData.removeFirst()
+            tableView.reloadData()
+        } else {
+            allDailyWeatherData.append(contentsOf: newData)
+            allDailyWeatherData.removeFirst()
+            tableView.reloadData()
+        }
     }
     
     func configureTableView(){

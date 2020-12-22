@@ -35,11 +35,11 @@ class DailyWeatherViewModel {
     }
     
     var maxTempText: String {
-        return "\(Int(dailyWeatherData.temperatureMax ?? 0))"
+        return "\(Int(dailyWeatherData.temperatureMax ?? 0))℃"
     }
     
     var minTempText: String {
-        return "\(Int(dailyWeatherData.temperatureMin ?? 0))"
+        return "\(Int(dailyWeatherData.temperatureMin ?? 0))℃"
     }
 }
 
