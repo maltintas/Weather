@@ -146,9 +146,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDF-hr-kNp">
-                                                    <rect key="frame" x="83" y="58.5" width="43" height="29"/>
+                                                    <rect key="frame" x="66" y="58.5" width="60" height="29"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="43" id="NEm-RA-TN6"/>
+                                                        <constraint firstAttribute="width" constant="60" id="NEm-RA-TN6"/>
                                                         <constraint firstAttribute="height" constant="29" id="Wgc-5I-1Qn"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="24"/>
@@ -167,7 +167,7 @@
                                 </stackView>
                             </subviews>
                         </stackView>
-                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cOB-SR-KLn">
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cOB-SR-KLn">
                             <rect key="frame" x="0.0" y="120" width="273" height="260.5"/>
                             <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>

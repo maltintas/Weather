@@ -20,6 +20,7 @@ class CurrentView: UIView {
     @IBOutlet weak var precipProbability: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     
+    //Helper Methods
     static func loadNib(owner: UIViewController) -> Any? {
         Bundle.main.loadNibNamed("CurrentView", owner: owner, options: nil)?.first
     }

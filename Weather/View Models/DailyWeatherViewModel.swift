@@ -26,7 +26,7 @@ class DailyWeatherViewModel {
     
     var iconImageName: String {
         guard let iconName = dailyWeatherData.icon else { return "_"}
-        return iconName
+        return configureIcons.setIcons(iconName: iconName)
     }
     
     var iconImageTintColor: UIColor {

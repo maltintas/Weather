@@ -22,7 +22,6 @@ class MainViewController: UIViewController {
     let fireAlertMessage = AlertMessage()
     let configureIcon = ConfigureIcons()
     var hourlyWeatherData: [HourlyWeatherData] = []
-    var dailyWeather = [DailyWeatherData]()
     let locationManager = CLLocationManager()
     let locationService = LocationServices()
     let fpc = FloatingPanelController()
@@ -41,12 +40,13 @@ class MainViewController: UIViewController {
     var allViews: [UIView] = []
     let viewConfigure = Configure()
     lazy var currentViewObject = CurrentView()
-    
+    lazy var detailViewObject = DetailUIView()
+    lazy var daysViewObject = DailyView()
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureSubViews()
         scrollView.delegate = self
                pageControl.addTarget(self, action: #selector(pageControlDidChange(_:)), for: .valueChanged)
@@ -66,7 +66,7 @@ class MainViewController: UIViewController {
         
         configureContentView()
         
-        
+       
     }
     
     override func viewDidLayoutSubviews() {
@@ -113,14 +113,13 @@ class MainViewController: UIViewController {
     }
     //MARK: - Configure SubViews
     func configureSubViews(){
-        if let detailTableView = TableView.loadNib(owner: self) as? TableView {
-            viewConfigure.configureTableView(tableView: detailTableView, xOrigin: 5, cornerRadius: 40)
-            detailTableView.tableView.register(DetailTableViewCell.nib(), forCellReuseIdentifier: DetailTableViewCell.identifier)
-            detailTableView.tableView.tag = 1001
-            detailTableView.tableView.delegate = self
-            detailTableView.tableView.dataSource = self
-            detailTableView.tableView.tableFooterView = UIView()
-            allViews.append(detailTableView)
+        
+        if let weatherDayView = DailyView.loadNib(owner: self) as? DailyView {
+            weatherDayView.configureView()
+            viewConfigure.configureDaysWeatherView(tableView: weatherDayView, xOrigin: 5, cornerRadius: 40)
+            daysViewObject = weatherDayView
+            allViews.append(weatherDayView)
+           
         }
         
         guard let curretView = CurrentView.loadNib(owner: self) as? CurrentView else { return }
@@ -128,49 +127,55 @@ class MainViewController: UIViewController {
         currentViewObject = curretView
         allViews.append(curretView)
         
-        if let dailyTableView = TableView.loadNib(owner: self) as? TableView {
-            viewConfigure.configureTableView(tableView: dailyTableView, xOrigin: 755, cornerRadius: 40)
-            dailyTableView.tableView.register(DaysTableViewCell.nib(), forCellReuseIdentifier: DaysTableViewCell.identifier)
-            dailyTableView.tableView.tag = 1002
-            dailyTableView.tableView.dataSource = self
-            dailyTableView.tableView.delegate = self
-            dailyTableView.tableView.tableFooterView = UIView()
-            allViews.append(dailyTableView)
-        }
+        guard let detailView = DetailUIView.loadNib(owner: self) as? DetailUIView else { return }
+        viewConfigure.configureView(view: detailView, xOrigin: 755, cornerRadius: 40)
+        detailViewObject = detailView
+        allViews.append(detailView)
+        
     }
 
     //MARK: - Network
     
     func getWeatherData(currentLocation: CLLocation = CLLocation(latitude: (41.043163), longitude: (29.007007))){
-        WeatherClient.getWeather(latitude: "\(currentLocation.coordinate.latitude)", longitude: "\(currentLocation.coordinate.longitude)") {[weak self] (data, error) in
+        WeatherClient.getWeather(latitude: "\(currentLocation.coordinate.latitude)", longitude: "\(currentLocation.coordinate.longitude)") {
+            [unowned self]  (data, error) in
             print("Get Weather Error: \(String(describing: error?.localizedDescription))")
             if error?.localizedDescription == "URLSessionTask failed with error: The Internet connection appears to be offline." {
-                self?.fireAlertMessage.alertMessage(message: "Please check your network connection.", viewController: self!)
+                self.fireAlertMessage.alertMessage(message: "Please check your network connection.", viewController: self)
             }
             
             guard let currentWeather = data?.currently else { return }
             guard let dailyWeatherData = data?.daily?.dailyData else { return }
             guard let firstDailyWeatherData = data?.daily?.dailyData?.first else { return }
             guard let hourlyData = data?.hourly?.hourlyData else {return }
+
+
             
-            if (self?.dailyWeather.isEmpty)! {
-                self?.dailyWeather.append(contentsOf: dailyWeatherData)
-                self?.dailyWeather.removeFirst()
+            if !self.daysViewObject.allDailyWeatherData.isEmpty {
+                self.daysViewObject.allDailyWeatherData.removeAll()
+                self.daysViewObject.allDailyWeatherData.append(contentsOf: dailyWeatherData)
+                self.daysViewObject.allDailyWeatherData.removeFirst()
+                self.daysViewObject.tableView.reloadData()
             } else {
-                self?.dailyWeather.removeAll()
-                self?.dailyWeather.append(contentsOf: dailyWeatherData)
-                self?.dailyWeather.removeFirst()
+                self.daysViewObject.allDailyWeatherData.append(contentsOf: dailyWeatherData)
+                self.daysViewObject.allDailyWeatherData.removeFirst()
+                self.daysViewObject.tableView.reloadData()
             }
             
             
-            let currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherData: currentWeather, dailyWeatherData: firstDailyWeatherData, city: self?.contentVC.city)
-            currentWeatherViewModel.configureTopUIElements(mainVC: self!)
-            currentWeatherViewModel.configureMidUIElements(currentView: self!.currentViewObject)
+            let currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherData: currentWeather, dailyWeatherData: firstDailyWeatherData, city: self.contentVC.city)
+            currentWeatherViewModel.configureTopUIElements(mainVC: self)
+            currentWeatherViewModel.configureMidUIElements(currentView: self.currentViewObject)
+            
+            let detailWeatherViewModel = DetailWeatherViewModel(dailyWeatherData: dailyWeatherData.first!)
+            detailWeatherViewModel.configureDetailView(detailView: self.detailViewObject)
+            
             
             DispatchQueue.main.async {
-                self?.hourlyWeatherData = hourlyData
-                self?.hourlyWeatherDataCollectionView.reloadData()
+                self.hourlyWeatherData = hourlyData
+                self.hourlyWeatherDataCollectionView.reloadData()
             }
+          
         }
     }
     
@@ -386,40 +391,9 @@ extension MainViewController: UITableViewDelegate {
     }
         
 }
-
+//MARK: - UIScrollViewDelegate
 extension MainViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(floorf(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
-    }
-}
-
-
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView.tag == 1001 {
-            return 10
-        } else if tableView.tag == 1002 {
-           return dailyWeather.count
-        }
-        return 9
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView.tag == 1001 {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: DetailTableViewCell.identifier, for: indexPath) as! DetailTableViewCell
-            guard let detailData = dailyWeather.first else { return UITableViewCell()}
-            let detailViewModel = DetailWeatherViewModel(dailyWeatherData: detailData )
-            detailViewModel.configure(cell: cell, indexPath: indexPath)
-            
-            return cell
-        } else if tableView.tag == 1002 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: DaysTableViewCell.identifier, for: indexPath) as! DaysTableViewCell
-            let dailyViewModel = DailyWeatherViewModel(dailyWeatherData: dailyWeather[indexPath.row])
-            tableView.reloadData()
-            dailyViewModel.configure(cell: cell)
-            
-        }
-        return UITableViewCell()
     }
 }
