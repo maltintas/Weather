@@ -362,6 +362,9 @@ extension MainViewController: UITableViewDelegate {
 //MARK: - UIScrollViewDelegate
 extension MainViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        guard !scrollView.isKind(of: UICollectionView.self) else { return }
+        
         pageControl.currentPage = Int(floorf(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
     }
 }
