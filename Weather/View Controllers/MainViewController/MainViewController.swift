@@ -113,20 +113,25 @@ class MainViewController: UIViewController {
     //MARK: - Configure SubViews
     func configureSubViews(){
     
-        guard let weatherDayView = DailyView.loadNib(owner: self) as? DailyView else { return }
+        if let weatherDayView = DailyView.loadNib(owner: self) as? DailyView {
         weatherDayView.configureView()
         daysViewObject = weatherDayView
         allViews.append(weatherDayView)
         
-        guard let curretView = CurrentView.loadNib(owner: self) as? CurrentView else { return }
-        curretView.configureView()
-        currentViewObject = curretView
-        allViews.append(curretView)
+        }
+            
+        if let curretView = CurrentView.loadNib(owner: self) as? CurrentView {
+            curretView.configureView()
+            currentViewObject = curretView
+            allViews.append(curretView)
+        }
         
-        guard let detailView = DetailUIView.loadNib(owner: self) as? DetailUIView else { return }
-        detailView.configureView()
-        detailViewObject = detailView
-        allViews.append(detailView)
+        
+        if let detailView = DetailUIView.loadNib(owner: self) as? DetailUIView {
+            detailView.configureView()
+            detailViewObject = detailView
+            allViews.append(detailView)
+        }
     }
 
     //MARK: - Network
