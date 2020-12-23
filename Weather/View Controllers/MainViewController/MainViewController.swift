@@ -331,7 +331,7 @@ extension MainViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
       
-        if tableView.tag == 1003 {
+        guard tableView.tag == 1003 else { return UIView()}
             
             let header: UIView = {
                 let searchResultHeader = UIView()
@@ -340,8 +340,7 @@ extension MainViewController: UITableViewDelegate {
                 return searchResultHeader
             }()
             
-            if section == 0 {
-                let _: UILabel = {
+                let headerLabel: UILabel = {
                     let searchResultLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 370, height: 32))
                     searchResultLabel.textColor = .headerColor()
                     searchResultLabel.textAlignment = .center
@@ -355,34 +354,10 @@ extension MainViewController: UITableViewDelegate {
                     header.addSubview(searchResultLabel)
                     return searchResultLabel
                 }()
-            } else if section == 1 {
-                let _: UILabel = {
-                    let cityLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 370, height: 32))
-                    cityLabel.textColor = .headerColor()
-                    cityLabel.textAlignment = .center
-                    cityLabel.font = UIFont(name: "Apple-SD-Gothic-Neo-Bold", size: 38)
-                    if section == 1 && contentVC.cities.count == 0 {
-                        cityLabel.text = ""
-                        
-                    } else {
-                        header.isHidden.toggle()
-                        if contentVC.cities.count == 1 {
-                            cityLabel.text = "Saved City"
-                        } else if contentVC.cities.count > 1 {
-                            cityLabel.text = "Saved Cities"
-                        }
-                        
-                    }
-                    header.addSubview(cityLabel)
-                    return cityLabel
-                }()
-            }
-            return header
-        } else {
-            return UIView()
-        }
+                header.addSubview(headerLabel)
+                return header
     }
-        
+    
 }
 //MARK: - UIScrollViewDelegate
 extension MainViewController: UIScrollViewDelegate {
